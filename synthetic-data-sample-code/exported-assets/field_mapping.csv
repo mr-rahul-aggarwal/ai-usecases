@@ -1,0 +1,36 @@
+Field Name,Type,Description,India,USA,Example (India),Example (USA)
+employee_id,string,Unique employee identifier,✓,✓,EMP8291,931744
+employee_name,string,Full name of employee,✓,✓,Amit Patel,Sarah Johnson
+designation,string,Job title/position,✓,✓,Software Engineer,Data Scientist
+department,string,Department name,✓,✓,Engineering,Data Science
+employer_name,string,Company name,✓,✓,Global Systems India Ltd,TechCorp Solutions Inc.
+employer_address,string,Company address,✓,✓,"DLF Cyber City, Gurgaon",1234 Silicon Valley Blvd
+pay_period_start,date,Start of pay period,✓,✓,2024-02-14,2024-01-15
+pay_period_end,date,End of pay period,✓,✓,2024-03-14,2024-02-14
+pay_date,date,Payment date,✓,✓,2024-03-15,2024-02-15
+currency,string,Currency code,✓,✓,INR,USD
+gross_income,integer,Total earnings before deductions,✓,✓,153593,12500
+total_deductions,integer,Sum of all deductions,✓,✓,26030,3245
+net_income,integer,Take-home pay,✓,✓,127563,9255
+country,string,Country style,✓,✓,India,USA
+pan,string,Permanent Account Number,✓,✗,BAHAA4569C,N/A
+uan,string,Universal Account Number,✓,✗,360237077075,N/A
+bank_account,string,Bank account number,✓,✗,99598203352,N/A
+bank_name,string,Bank name,✓,✗,State Bank of India,N/A
+ssn,string,Social Security Number (masked),✗,✓,N/A,XXX-XX-4523
+routing_number,string,Bank routing number,✗,✓,N/A,345678901
+account_number,string,Bank account (masked),✗,✓,N/A,XXXX5678
+earnings.basic_salary,integer,Base salary,✓,✗,88808,N/A
+earnings.hra,integer,House Rent Allowance,✓,✗,35523,N/A
+earnings.special_allowance,integer,Special allowance,✓,✗,26642,N/A
+earnings.transport_allowance,integer,Transport allowance,✓,✗,2620,N/A
+earnings.regular_pay,integer,Regular monthly pay,✗,✓,N/A,12500
+deductions.provident_fund,integer,PF contribution,✓,✗,10656,N/A
+deductions.professional_tax,integer,Professional tax,✓,✗,200,N/A
+deductions.tds,integer,Tax Deducted at Source,✓,✗,15174,N/A
+deductions.federal_tax,integer,Federal income tax,✗,✓,N/A,2250
+deductions.state_tax,integer,State income tax,✗,✓,N/A,625
+deductions.social_security,integer,Social Security tax,✗,✓,N/A,775
+deductions.medicare,integer,Medicare tax,✗,✓,N/A,181
+deductions.health_insurance,integer,Health insurance premium,✗,✓,N/A,300
+deductions.retirement_401k,integer,401(k) contribution,✗,✓,N/A,500

@@ -1,0 +1,307 @@
+[
+  {
+    "employee_id": "EMP8291",
+    "employee_name": "Amit Patel",
+    "designation": "Software Engineer",
+    "department": "Data Science",
+    "employer_name": "Global Systems India Ltd",
+    "employer_address": "DLF Cyber City, Gurgaon, Haryana 122002",
+    "pan": "BAHAA4569C",
+    "uan": "360237077075",
+    "pay_period_start": "2024-02-14",
+    "pay_period_end": "2024-03-14",
+    "pay_date": "2024-03-15",
+    "currency": "INR",
+    "earnings": {
+      "basic_salary": 88808,
+      "hra": 35523,
+      "special_allowance": 26642,
+      "transport_allowance": 2620
+    },
+    "gross_income": 153593,
+    "deductions": {
+      "provident_fund": 10656,
+      "professional_tax": 200,
+      "tds": 15174
+    },
+    "total_deductions": 26030,
+    "net_income": 127563,
+    "country": "India",
+    "bank_account": "99598203352",
+    "bank_name": "State Bank of India"
+  },
+  {
+    "employee_id": "931744",
+    "employee_name": "Michael Johnson",
+    "designation": "Senior Software Engineer",
+    "department": "Product",
+    "employer_name": "DataVision Analytics LLC",
+    "employer_address": "5678 Innovation Drive, Austin, TX 78701",
+    "ssn": "XXX-XX-7353",
+    "pay_period_start": "2024-05-29",
+    "pay_period_end": "2024-06-27",
+    "pay_date": "2024-06-28",
+    "currency": "USD",
+    "earnings": {
+      "regular_pay": 10163
+    },
+    "gross_income": 10163,
+    "deductions": {
+      "federal_tax": 1777,
+      "state_tax": 504,
+      "social_security": 630,
+      "medicare": 147,
+      "health_insurance": 250,
+      "retirement_401k": 551
+    },
+    "total_deductions": 3859,
+    "net_income": 6304,
+    "country": "USA",
+    "routing_number": "126990496",
+    "account_number": "XXXX2580"
+  },
+  {
+    "employee_id": "EMP4547",
+    "employee_name": "Amit Patel",
+    "designation": "Senior Software Engineer",
+    "department": "Operations",
+    "employer_name": "Global Systems India Ltd",
+    "employer_address": "DLF Cyber City, Gurgaon, Haryana 122002",
+    "pan": "ACCBA8088B",
+    "uan": "583967910875",
+    "pay_period_start": "2024-07-29",
+    "pay_period_end": "2024-08-27",
+    "pay_date": "2024-08-28",
+    "currency": "INR",
+    "earnings": {
+      "basic_salary": 54798,
+      "hra": 21919,
+      "special_allowance": 16439,
+      "transport_allowance": 1907
+    },
+    "gross_income": 95063,
+    "deductions": {
+      "provident_fund": 6575,
+      "professional_tax": 200,
+      "tds": 10355
+    },
+    "total_deductions": 17130,
+    "net_income": 77933,
+    "country": "India",
+    "bank_account": "11767493550",
+    "bank_name": "ICICI Bank"
+  },
+  {
+    "employee_id": "267835",
+    "employee_name": "David Davis",
+    "designation": "Data Scientist",
+    "department": "Engineering",
+    "employer_name": "DataVision Analytics LLC",
+    "employer_address": "5678 Innovation Drive, Austin, TX 78701",
+    "ssn": "XXX-XX-2246",
+    "pay_period_start": "2024-09-15",
+    "pay_period_end": "2024-10-14",
+    "pay_date": "2024-10-15",
+    "currency": "USD",
+    "earnings": {
+      "regular_pay": 7227
+    },
+    "gross_income": 7227,
+    "deductions": {
+      "federal_tax": 1529,
+      "state_tax": 289,
+      "social_security": 448,
+      "medicare": 104,
+      "health_insurance": 400,
+      "retirement_401k": 260
+    },
+    "total_deductions": 3030,
+    "net_income": 4197,
+    "country": "USA",
+    "routing_number": "812245989",
+    "account_number": "XXXX3913"
+  },
+  {
+    "employee_id": "EMP4388",
+    "employee_name": "Priya Smith",
+    "designation": "DevOps Engineer",
+    "department": "Engineering",
+    "employer_name": "Global Systems India Ltd",
+    "employer_address": "DLF Cyber City, Gurgaon, Haryana 122002",
+    "pan": "BCPAB9550C",
+    "uan": "516788996444",
+    "pay_period_start": "2024-06-15",
+    "pay_period_end": "2024-07-14",
+    "pay_date": "2024-07-15",
+    "currency": "INR",
+    "earnings": {
+      "basic_salary": 87322,
+      "hra": 34928,
+      "special_allowance": 26196,
+      "transport_allowance": 2516
+    },
+    "gross_income": 150962,
+    "deductions": {
+      "provident_fund": 10478,
+      "professional_tax": 208,
+      "tds": 21726
+    },
+    "total_deductions": 32412,
+    "net_income": 118550,
+    "country": "India",
+    "bank_account": "18917296360",
+    "bank_name": "Axis Bank"
+  },
+  {
+    "employee_id": "502708",
+    "employee_name": "Rajesh Patel",
+    "designation": "Data Scientist",
+    "department": "Operations",
+    "employer_name": "DataVision Analytics LLC",
+    "employer_address": "5678 Innovation Drive, Austin, TX 78701",
+    "ssn": "XXX-XX-5814",
+    "pay_period_start": "2023-12-29",
+    "pay_period_end": "2024-01-27",
+    "pay_date": "2024-01-28",
+    "currency": "USD",
+    "earnings": {
+      "regular_pay": 7724
+    },
+    "gross_income": 7724,
+    "deductions": {
+      "federal_tax": 1430,
+      "state_tax": 411,
+      "social_security": 478,
+      "medicare": 111,
+      "health_insurance": 300,
+      "retirement_401k": 451
+    },
+    "total_deductions": 3181,
+    "net_income": 4543,
+    "country": "USA",
+    "routing_number": "173681402",
+    "account_number": "XXXX5676"
+  },
+  {
+    "employee_id": "EMP6400",
+    "employee_name": "David Patel",
+    "designation": "Data Scientist",
+    "department": "Engineering",
+    "employer_name": "InfoTech Solutions Pvt Ltd",
+    "employer_address": "Block A, Cyber Towers, HITEC City, Hyderabad 500081",
+    "pan": "CCPCA2647A",
+    "uan": "271396341519",
+    "pay_period_start": "2024-05-29",
+    "pay_period_end": "2024-06-27",
+    "pay_date": "2024-06-28",
+    "currency": "INR",
+    "earnings": {
+      "basic_salary": 112763,
+      "hra": 45105,
+      "special_allowance": 33828,
+      "transport_allowance": 2560
+    },
+    "gross_income": 194256,
+    "deductions": {
+      "provident_fund": 13531,
+      "professional_tax": 208,
+      "tds": 14580
+    },
+    "total_deductions": 28319,
+    "net_income": 165937,
+    "country": "India",
+    "bank_account": "92230500436",
+    "bank_name": "State Bank of India"
+  },
+  {
+    "employee_id": "954115",
+    "employee_name": "Amit Kumar",
+    "designation": "Data Scientist",
+    "department": "Engineering",
+    "employer_name": "DataVision Analytics LLC",
+    "employer_address": "5678 Innovation Drive, Austin, TX 78701",
+    "ssn": "XXX-XX-7317",
+    "pay_period_start": "2023-12-29",
+    "pay_period_end": "2024-01-27",
+    "pay_date": "2024-01-28",
+    "currency": "USD",
+    "earnings": {
+      "regular_pay": 12559
+    },
+    "gross_income": 12559,
+    "deductions": {
+      "federal_tax": 2113,
+      "state_tax": 967,
+      "social_security": 778,
+      "medicare": 182,
+      "health_insurance": 400,
+      "retirement_401k": 523
+    },
+    "total_deductions": 4963,
+    "net_income": 7596,
+    "country": "USA",
+    "routing_number": "246860793",
+    "account_number": "XXXX3428"
+  },
+  {
+    "employee_id": "EMP7587",
+    "employee_name": "Jennifer Singh",
+    "designation": "Senior Software Engineer",
+    "department": "Data Science",
+    "employer_name": "Digital Innovations India Pvt Ltd",
+    "employer_address": "Prestige Tech Park, Marathahalli, Bengaluru 560037",
+    "pan": "BCPBA9186C",
+    "uan": "953953389610",
+    "pay_period_start": "2024-11-28",
+    "pay_period_end": "2024-12-27",
+    "pay_date": "2024-12-28",
+    "currency": "INR",
+    "earnings": {
+      "basic_salary": 71172,
+      "hra": 28468,
+      "special_allowance": 21351,
+      "transport_allowance": 1875
+    },
+    "gross_income": 122866,
+    "deductions": {
+      "provident_fund": 8540,
+      "professional_tax": 208,
+      "tds": 8522
+    },
+    "total_deductions": 17270,
+    "net_income": 105596,
+    "country": "India",
+    "bank_account": "90122558131",
+    "bank_name": "Axis Bank"
+  },
+  {
+    "employee_id": "597313",
+    "employee_name": "Jennifer Davis",
+    "designation": "Senior Software Engineer",
+    "department": "Operations",
+    "employer_name": "CloudStream Technologies",
+    "employer_address": "9012 Enterprise Way, Seattle, WA 98101",
+    "ssn": "XXX-XX-7580",
+    "pay_period_start": "2024-09-15",
+    "pay_period_end": "2024-10-14",
+    "pay_date": "2024-10-15",
+    "currency": "USD",
+    "earnings": {
+      "regular_pay": 13249
+    },
+    "gross_income": 13249,
+    "deductions": {
+      "federal_tax": 2217,
+      "state_tax": 843,
+      "social_security": 821,
+      "medicare": 192,
+      "health_insurance": 400,
+      "retirement_401k": 617
+    },
+    "total_deductions": 5090,
+    "net_income": 8159,
+    "country": "USA",
+    "routing_number": "136250722",
+    "account_number": "XXXX9736"
+  }
+]

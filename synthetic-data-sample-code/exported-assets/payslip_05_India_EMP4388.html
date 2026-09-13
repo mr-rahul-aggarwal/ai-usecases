@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payslip - Priya Smith</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .payslip {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .header {
+            text-align: center;
+            border-bottom: 2px solid #333;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+        .company-name {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+        .company-address {
+            font-size: 12px;
+            color: #666;
+        }
+        .payslip-title {
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+            margin: 20px 0;
+            color: #34495e;
+        }
+        .employee-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+            font-size: 13px;
+        }
+        .info-row {
+            display: flex;
+            padding: 5px 0;
+        }
+        .info-label {
+            font-weight: bold;
+            min-width: 150px;
+            color: #555;
+        }
+        .info-value {
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 13px;
+        }
+        th {
+            background-color: #34495e;
+            color: white;
+            padding: 10px;
+            text-align: left;
+            font-weight: bold;
+        }
+        td {
+            padding: 8px 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        .amount {
+            text-align: right;
+        }
+        .total-row {
+            font-weight: bold;
+            background-color: #ecf0f1;
+            font-size: 14px;
+        }
+        .net-pay {
+            background-color: #2ecc71;
+            color: white;
+            font-size: 15px;
+            font-weight: bold;
+        }
+        .footer {
+            margin-top: 30px;
+            padding-top: 15px;
+            border-top: 1px solid #ddd;
+            font-size: 11px;
+            color: #666;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="payslip">
+        <div class="header">
+            <div class="company-name">Global Systems India Ltd</div>
+            <div class="company-address">DLF Cyber City, Gurgaon, Haryana 122002</div>
+        </div>
+
+        <div class="payslip-title">PAYSLIP FOR THE MONTH OF 2024-07</div>
+
+        <div class="employee-info">
+            <div class="info-row">
+                <span class="info-label">Employee ID:</span>
+                <span class="info-value">EMP4388</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Employee Name:</span>
+                <span class="info-value">Priya Smith</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Designation:</span>
+                <span class="info-value">DevOps Engineer</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Department:</span>
+                <span class="info-value">Engineering</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">PAN:</span>
+                <span class="info-value">BCPAB9550C</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">UAN:</span>
+                <span class="info-value">516788996444</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Pay Period:</span>
+                <span class="info-value">2024-06-15 to 2024-07-14</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Pay Date:</span>
+                <span class="info-value">2024-07-15</span>
+            </div>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>EARNINGS</th>
+                    <th class="amount">AMOUNT (INR)</th>
+                    <th>DEDUCTIONS</th>
+                    <th class="amount">AMOUNT (INR)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Basic Salary</td>
+                    <td class="amount">87,322</td>
+                    <td>Provident Fund</td>
+                    <td class="amount">10,478</td>
+                </tr>
+                <tr>
+                    <td>House Rent Allowance (HRA)</td>
+                    <td class="amount">34,928</td>
+                    <td>Professional Tax</td>
+                    <td class="amount">208</td>
+                </tr>
+                <tr>
+                    <td>Special Allowance</td>
+                    <td class="amount">26,196</td>
+                    <td>Tax Deducted at Source (TDS)</td>
+                    <td class="amount">21,726</td>
+                </tr>
+                <tr>
+                    <td>Transport Allowance</td>
+                    <td class="amount">2,516</td>
+                    <td></td>
+                    <td class="amount"></td>
+                </tr>
+                <tr class="total-row">
+                    <td>GROSS EARNINGS</td>
+                    <td class="amount">150,962</td>
+                    <td>TOTAL DEDUCTIONS</td>
+                    <td class="amount">32,412</td>
+                </tr>
+                <tr class="net-pay">
+                    <td colspan="3">NET PAY (Gross Earnings - Total Deductions)</td>
+                    <td class="amount">118,550</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="employee-info">
+            <div class="info-row">
+                <span class="info-label">Bank Name:</span>
+                <span class="info-value">Axis Bank</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Account Number:</span>
+                <span class="info-value">18917296360</span>
+            </div>
+        </div>
+
+        <div class="footer">
+            This is a computer-generated payslip and does not require a signature.<br>
+            For queries, please contact HR Department at hr@company.com
+        </div>
+    </div>
+</body>
+</html>
