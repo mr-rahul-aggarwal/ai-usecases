@@ -1,0 +1,20 @@
+# Local virtual environments
+virtual_environment/
+virtual_env/
+
+# Local environment files; keep the shareable template in Git
+.env
+.env.*
+!.env.example
+
+# Python bytecode and cache files
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+
+# Logs and binary artifacts
+*.log
+*.bin
+chroma_db/
+.DS_Store
