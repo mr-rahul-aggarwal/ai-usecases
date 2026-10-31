@@ -42,7 +42,7 @@ The Docker commands below use `sudo`, so adding your account to the Docker group
 ## 4. Clone the project and set up the API credentials
 
 ```bash
-git clone https://github.com/Gr8Learning-2312/insurance-agent.git
+git clone https://github.com/mr-rahul-aggarwal/insurance-agent.git
 cd insurance-agent
 cp .env.example .env
 nano .env

@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Case File — Automating the Auto-Insurance Claim</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Source+Sans+3:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F2ECD8;
+  --paper-deep:#E7DCB7;
+  --ink:#2B2419;
+  --ink-soft:#5B4F3B;
+  --ink-faint:#A4947099;
+  --line:#CBB97E;
+  --brass:#8A6A26;
+  --brass-soft:#EFE0B2;
+  --green:#2E6B46;
+  --green-soft:#E1EEE1;
+  --red:#A3342A;
+  --red-soft:#F4E1DB;
+  --amber:#A3680F;
+  --amber-soft:#F4E6C4;
+  --blue:#2E5A8A;
+  --blue-soft:#E2EAF3;
+  --white:#FBF7EA;
+  --serif:'Fraunces',serif;
+  --sans:'Source Sans 3',sans-serif;
+  --mono:'JetBrains Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:var(--sans);
+  color:var(--ink);
+  background-color:var(--paper);
+  background-image:
+    repeating-linear-gradient(transparent, transparent 27px, rgba(138,106,38,.085) 28px),
+    linear-gradient(90deg, rgba(203,185,126,.5) 1px, transparent 1px);
+  background-size:100% 28px, 96px 100%;
+  line-height:1.5;
+}
+.wrap{max-width:1180px;margin:0 auto;padding:0 28px}
+a{color:inherit}
+.tab{
+  display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;
+  color:var(--white);background:var(--ink);
+  padding:5px 14px 5px 12px;position:relative;
+}
+.tab::after{content:'';position:absolute;right:-9px;top:0;bottom:0;width:9px;background:var(--ink);clip-path:polygon(0 0,100% 50%,0 100%)}
+.tab.brass{background:var(--brass)}
+.tab.brass::after{background:var(--brass)}
+.sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:5px;flex-wrap:wrap}
+.sec-head h2{font-family:var(--serif);font-weight:600;font-size:clamp(21px,2.5vw,28px)}
+.sec-head .idx{font-family:var(--mono);font-size:11.5px;color:var(--brass);letter-spacing:.1em}
+.sec-sub{font-size:13.5px;color:var(--ink-soft);max-width:760px;margin-bottom:14px}
+section{padding:30px 0}
+section.tight{padding:14px 0}
+.panel{
+  background:var(--white);border:1.5px solid var(--ink);
+  box-shadow:5px 5px 0 rgba(43,36,25,.13);
+  padding:14px 18px;position:relative;
+}
+.punch{position:absolute;width:9px;height:9px;border-radius:50%;background:var(--paper);border:1.5px solid var(--ink)}
+.punch.l{left:-5px;top:16px}
+.punch.r{right:-5px;top:16px}
+
+/* ===== divider / pivot ===== */
+.pivot{display:flex;align-items:center;gap:14px;margin:8px 0 2px}
+.pivot .ln{flex:1;height:0;border-top:1.5px dashed var(--brass)}
+.pivot span.tab{flex:0 0 auto}
+
+/* ===== stamp badge ===== */
+.stamp-mark{
+  display:inline-block;font-family:var(--mono);font-weight:700;font-size:12.5px;letter-spacing:.14em;
+  border:2.5px solid; padding:4px 11px; transform:rotate(-4deg); border-radius:3px;
+  text-transform:uppercase; white-space:nowrap;
+}
+.stamp-mark.approved{color:var(--green);border-color:var(--green)}
+.stamp-mark.denied{color:var(--red);border-color:var(--red)}
+.stamp-mark.invalid{color:var(--red);border-color:var(--red)}
+.stamp-mark.review{color:var(--amber);border-color:var(--amber)}
+
+/* ===== header ===== */
+header{padding:26px 0 16px;border-bottom:2px solid var(--ink)}
+.hero-top{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;flex-wrap:wrap}
+.hero-meta{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:var(--ink-soft);text-transform:uppercase;text-align:right;line-height:1.85}
+h1{font-family:var(--serif);font-weight:600;font-size:clamp(25px,4vw,40px);line-height:1.12;margin:12px 0 9px}
+h1 em{font-style:italic;font-weight:500;color:var(--brass)}
+.hero-tag{font-size:14.5px;color:var(--ink-soft);max-width:720px}
+.hero-strip{display:flex;gap:0;margin-top:16px;flex-wrap:wrap;border:1.5px solid var(--ink);background:var(--white)}
+.hero-strip .cell{flex:1;min-width:160px;padding:7px 14px;border-right:1.5px solid var(--line)}
+.hero-strip .cell:last-child{border-right:none}
+.hero-strip .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;color:var(--brass);text-transform:uppercase}
+.hero-strip .v{font-family:var(--serif);font-size:13.5px;font-weight:600;margin-top:2px}
+
+/* ===== two-column compare ===== */
+.compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:680px){.compare-grid{grid-template-columns:1fr}}
+.compare-card{background:var(--white);border:1.5px solid var(--ink);box-shadow:4px 4px 0 rgba(43,36,25,.1);padding:11px 15px}
+.compare-card.b{border-color:var(--brass)}
+.compare-card h3{font-family:var(--serif);font-size:15px;font-weight:600;margin-bottom:6px}
+.compare-card.b h3{color:var(--brass)}
+.compare-card ul{list-style:none}
+.compare-card li{display:flex;gap:10px;font-size:12px;padding:4px 0;border-bottom:1px dashed var(--line);color:var(--ink-soft)}
+.compare-card li:last-child{border-bottom:none}
+.compare-card li b{flex:0 0 112px;color:var(--ink);font-family:var(--mono);font-size:9px;letter-spacing:.02em;text-transform:uppercase;padding-top:1px}
+
+/* ===== numbered step rail ===== */
+.rail{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:6px}
+@media(max-width:760px){.rail{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:460px){.rail{grid-template-columns:1fr}}
+.rail-step{display:flex;gap:10px;background:var(--white);border:1.5px solid var(--ink);padding:10px 12px;box-shadow:3px 3px 0 rgba(43,36,25,.09)}
+.rail-step .r-num{flex:0 0 26px;height:26px;border:1.5px solid var(--ink);background:var(--brass-soft);color:var(--ink);font-family:var(--mono);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.rail-step div.r-body h4{font-family:var(--serif);font-size:13.5px;font-weight:600;margin-bottom:3px}
+.rail-step p{font-size:11.5px;color:var(--ink-soft);line-height:1.42}
+
+/* ===== tool grid ===== */
+.tool-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media(max-width:760px){.tool-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){.tool-grid{grid-template-columns:1fr}}
+.tool-card{background:var(--white);border:1.5px solid var(--ink);box-shadow:4px 4px 0 rgba(43,36,25,.1);padding:10px 12px;display:flex;flex-direction:column}
+.tool-card .t-num{font-family:var(--mono);font-size:10px;color:var(--brass);letter-spacing:.1em}
+.tool-card h3{font-family:var(--mono);font-size:13px;font-weight:700;margin:5px 0 6px;color:var(--ink)}
+.tool-card p{font-size:11.5px;color:var(--ink-soft);line-height:1.44;flex:1}
+.tool-card .t-io{margin-top:8px;padding-top:7px;border-top:1px dashed var(--line);font-family:var(--mono);font-size:9.5px;color:var(--ink-soft)}
+.tool-card .t-io b{color:var(--ink)}
+
+/* ===== repo tree ===== */
+.tree{font-family:var(--mono);font-size:12px;line-height:1.75;color:var(--ink-soft);white-space:pre}
+.tree b{color:var(--ink);font-weight:700}
+.tree .cm{color:var(--brass)}
+
+/* ===== svg flow ===== */
+.flow-svg{width:100%;height:auto;display:block;margin-top:8px}
+.f-box{fill:var(--white);stroke:var(--ink);stroke-width:1.6}
+.f-box.deny{fill:var(--red-soft);stroke:var(--red)}
+.f-lbl{font-family:'Source Sans 3',sans-serif;font-size:11.5px;font-weight:700;fill:var(--ink)}
+.f-lbl-sm{font-family:'JetBrains Mono',monospace;font-size:8.3px;fill:var(--ink-soft)}
+.f-wire{stroke:var(--ink);stroke-width:1.6;fill:none}
+.f-wire-deny{stroke:var(--red);stroke-width:1.6;fill:none;stroke-dasharray:5 4}
+.f-tag{font-family:'JetBrains Mono',monospace;font-size:9px;fill:var(--brass);font-weight:700}
+
+/* ===== install grid ===== */
+.install-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media(max-width:780px){.install-grid{grid-template-columns:1fr}}
+.install-card{background:var(--white);border:1.5px solid var(--ink);box-shadow:4px 4px 0 rgba(43,36,25,.1);padding:11px 14px}
+.install-card .i-num{font-family:var(--mono);font-size:10px;color:var(--brass);letter-spacing:.1em}
+.install-card h3{font-family:var(--serif);font-size:14.5px;font-weight:600;margin:5px 0 7px}
+.install-card ol{padding-left:16px;font-size:11px;color:var(--ink-soft);line-height:1.55}
+.install-card code{display:block;font-family:var(--mono);font-size:9.5px;background:var(--paper-deep);color:var(--ink);padding:5px 7px;margin:4px 0;overflow-x:auto;white-space:pre}
+
+/* ===== test suite ===== */
+.suite{display:flex;flex-direction:column;gap:7px}
+.suite-row{display:grid;grid-template-columns:120px 150px 90px 110px 1fr;gap:12px;align-items:center;background:var(--white);border:1.5px solid var(--ink);padding:8px 14px;box-shadow:3px 3px 0 rgba(43,36,25,.08)}
+.suite-row.head{background:transparent;border:none;box-shadow:none;padding:0 14px;font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;color:var(--brass);text-transform:uppercase}
+@media(max-width:820px){.suite-row{grid-template-columns:1fr 1fr;row-gap:4px}.suite-row.head{display:none}}
+.suite-row .s-id{font-family:var(--mono);font-size:11px;color:var(--ink-soft)}
+.suite-row .s-name{font-family:var(--serif);font-weight:600;font-size:13px}
+.suite-row .s-amt{font-family:var(--mono);font-size:12px}
+.suite-row .s-why{font-size:11px;color:var(--ink-soft)}
+
+/* ===== idea panel ===== */
+.idea-panel{background:var(--ink);color:var(--white);padding:16px 22px;position:relative}
+.idea-panel p.lede{font-family:var(--serif);font-size:15px;font-style:italic;line-height:1.4;max-width:820px}
+.idea-list{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:14px}
+@media(max-width:680px){.idea-list{grid-template-columns:1fr}}
+.idea-list div{border-left:2px solid var(--brass);padding-left:12px}
+.idea-list .n{font-family:var(--mono);font-size:10px;color:var(--brass-soft);letter-spacing:.1em}
+.idea-list p{font-size:11.5px;color:#EEE6D2;margin-top:2px;line-height:1.4}
+
+footer{border-top:2px solid var(--ink);padding:9px 0 12px;font-family:var(--mono);font-size:10px;color:var(--ink-soft);letter-spacing:.06em;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+
+@media print{
+  body{background-image:none}
+  section{padding:18px 0}
+  .idea-panel{background:var(--ink)!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="hero-top">
+      <span class="tab brass">Case File · Auto Insurance Claims Agent</span>
+      <div class="hero-meta">LangGraph · ChromaDB · Streamlit<br>An automated claims-decisioning agent</div>
+    </div>
+    <h1>An Agent That Reads the Policy <em>— before it pays, denies, or escalates a claim</em></h1>
+    <p class="hero-tag">Auto insurance claims are still mostly adjudicated by hand: an executive reads an invoice, flips through a policy document, and decides. This case file first sets out, at a high level, what an agent would need to do to take on that job responsibly — and then walks through the shared repository where that agent is actually built: the workflow, its tools, its knowledge base, and how to run it.</p>
+    <div class="hero-strip">
+      <div class="cell"><div class="k">Orchestration</div><div class="v">LangGraph StateGraph</div></div>
+      <div class="cell"><div class="k">Knowledge base</div><div class="v">Chroma vector store</div></div>
+      <div class="cell"><div class="k">Reasoning model</div><div class="v">GPT-4o-mini</div></div>
+      <div class="cell"><div class="k">Interface</div><div class="v">Streamlit app</div></div>
+      <div class="cell"><div class="k">Tools</div><div class="v">6 custom tools</div></div>
+    </div>
+  </div>
+</header>
+
+<!-- ============ FIG 1 — business case ============ -->
+<section class="tight">
+  <div class="wrap">
+    <div class="sec-head"><span class="idx">FIG. 1</span><h2>The case for an agent in the claims file</h2></div>
+    <p class="sec-sub">Claims processing today runs on manual review of invoices against a policy document that is long, dense, and updated on its own schedule — exactly the conditions under which people make inconsistent calls.</p>
+    <div class="compare-grid">
+      <div class="compare-card">
+        <h3>The manual file, today</h3>
+        <ul>
+          <li><b>Reviewer</b>A claims executive, by hand</li>
+          <li><b>Reference</b>The full policy document, read start to end</li>
+          <li><b>Checks</b>Vendor terms, payment stipulations, subject-matter judgement</li>
+          <li><b>Failure mode</b>Claims denied on invalid grounds, or inflated ones approved</li>
+          <li><b>Cost</b>Slow cycle times, rising overhead, client frustration</li>
+        </ul>
+      </div>
+      <div class="compare-card b">
+        <h3>The agentic file</h3>
+        <ul>
+          <li><b>Reviewer</b>An LLM agent with retrieval and a set of specialised tools</li>
+          <li><b>Reference</b>The same policy, held in a form the agent can search</li>
+          <li><b>Checks</b>Coverage validity, relevant policy clauses, a price sanity check</li>
+          <li><b>Failure mode</b>Caught early — an invalid claim is stopped before it goes further</li>
+          <li><b>Outcome</b>The same claim, read the same way, every time</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FIG 2 — agentic vs traditional RAG ============ -->
+<section class="tight">
+  <div class="wrap">
+    <div class="sec-head"><span class="idx">FIG. 2</span><h2>Why agentic RAG, and not a plain retrieve-then-generate pipeline</h2></div>
+    <p class="sec-sub">A traditional RAG pipeline retrieves once and answers once. A claim isn't a single lookup — it needs validation, a priced sanity check, and a decision that can stop early. That calls for an agent that plans its own next step.</p>
+    <div class="compare-grid">
+      <div class="compare-card">
+        <h3>Traditional RAG</h3>
+        <ul>
+          <li><b>Workflow</b>Static: retrieve, then generate, once</li>
+          <li><b>Adaptability</b>Low — one pass, no branching on what it finds</li>
+          <li><b>Multi-step tasks</b>Not a natural fit</li>
+          <li><b>Self-correction</b>None built in</li>
+        </ul>
+      </div>
+      <div class="compare-card b">
+        <h3>Agentic RAG</h3>
+        <ul>
+          <li><b>Workflow</b>Dynamic: reflection, planning, tool use, collaboration</li>
+          <li><b>Adaptability</b>Retrieval and context are refined as the agent reasons</li>
+          <li><b>Multi-step tasks</b>Sequential or collaborative operating structure</li>
+          <li><b>Self-correction</b>Can route around an invalid or inflated claim</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FIG 3 — what the agent is responsible for (broad) ============ -->
+<section class="tight">
+  <div class="wrap">
+    <div class="sec-head"><span class="idx">FIG. 3</span><h2>What the agent is responsible for</h2></div>
+    <p class="sec-sub">Stripped of implementation detail, the job breaks into six responsibilities, each one gating the next so a bad claim is stopped as early as possible.</p>
+    <div class="rail">
+      <div class="rail-step"><span class="r-num">1</span><div class="r-body"><h4>Understand the claim</h4><p>Turn the raw submission into a structured record the rest of the workflow can act on.</p></div></div>
+      <div class="rail-step"><span class="r-num">2</span><div class="r-body"><h4>Check it's valid</h4><p>Confirm the claim actually qualifies before any policy lookup or pricing work is done.</p></div></div>
+      <div class="rail-step"><span class="r-num">3</span><div class="r-body"><h4>Know where to look</h4><p>Work out which parts of the policy are relevant to this specific claim.</p></div></div>
+      <div class="rail-step"><span class="r-num">4</span><div class="r-body"><h4>Bring back the right text</h4><p>Retrieve the matching policy sections from the knowledge base.</p></div></div>
+      <div class="rail-step"><span class="r-num">5</span><div class="r-body"><h4>Weigh coverage and price</h4><p>Decide what's covered, and sanity-check whether the amount asked for is reasonable.</p></div></div>
+      <div class="rail-step"><span class="r-num">6</span><div class="r-body"><h4>Commit to a decision</h4><p>Approve, deny, or flag for review — with a reason attached every time.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PIVOT ============ -->
+<section class="tight" style="padding:6px 0">
+  <div class="wrap">
+    <div class="pivot"><span class="tab brass">From here on — inside the repository</span><div class="ln"></div></div>
+  </div>
+</section>
+
+<!-- ============ FIG 4 — tool grid (repo) ============ -->
+<section class="tight">
+  <div class="wrap">
+    <div class="sec-head"><span class="idx">FIG. 4</span><h2>Six tools, one claim passed hand to hand</h2></div>
+    <p class="sec-sub">The repository implements the six responsibilities above as six callable tools. Each one takes the output of the last and hands back a little more structure.</p>
+    <div class="tool-grid">
+      <div class="tool-card">
+        <span class="t-num">TOOL 1</span>
+        <h3>parse_claim</h3>
+        <p>Prompts the model to read the incoming claim JSON and extract the claim ID, policy holder, vendor name, invoice items, and claim amount into a clean JSON object.</p>
+        <div class="t-io"><b>in:</b> claim json &nbsp; <b>out:</b> parsed fields</div>
+      </div>
+      <div class="tool-card">
+        <span class="t-num">TOOL 2</span>
+        <h3>is_valid_query</h3>
+        <p>Prompts the model to confirm the claim has all required fields, a claim amount above zero, a named vendor, and an identified policy holder — returning a validity flag and a reason.</p>
+        <div class="t-io"><b>in:</b> parsed fields &nbsp; <b>out:</b> is_valid, reason</div>
+      </div>
+      <div class="tool-card">
+        <span class="t-num">TOOL 3</span>
+        <h3>generate_policy_queries</h3>
+        <p>Prompts the model for 2–3 targeted search queries covering coverage for the service type, vendor requirements, and claim-amount limits.</p>
+        <div class="t-io"><b>in:</b> parsed fields &nbsp; <b>out:</b> list of queries</div>
+      </div>
+      <div class="tool-card">
+        <span class="t-num">TOOL 4</span>
+        <h3>retrieve_policy_text</h3>
+        <p>Runs each generated query against the policy knowledge base and combines the top matching sections into a single block of retrieved text.</p>
+        <div class="t-io"><b>in:</b> queries &nbsp; <b>out:</b> policy text</div>
+      </div>
+      <div class="tool-card">
+        <span class="t-num">TOOL 5</span>
+        <h3>generate_recommendation</h3>
+        <p>Weighs the claim against the retrieved policy text and returns an APPROVE / DENY recommendation with supporting reasoning.</p>
+        <div class="t-io"><b>in:</b> claim + policy text &nbsp; <b>out:</b> recommendation, reasoning</div>
+      </div>
+      <div class="tool-card">
+        <span class="t-num">TOOL 6</span>
+        <h3>finalize_decision</h3>
+        <p>Combines the recommendation, its reasoning, and the price-check result into a final APPROVED / DENIED / REQUIRES_REVIEW decision.</p>
+        <div class="t-io"><b>in:</b> recommendation + price check &nbsp; <b>out:</b> final decision</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FIG 5 — langgraph flow ============ -->
+<section class="tight">
+  <div class="wrap">
+    <div class="sec-head"><span class="idx">FIG. 5</span><h2>The workflow as a state machine</h2></div>
+    <p class="sec-sub">The six tools are wired into an eight-node LangGraph workflow. The single branch point — is the claim valid? — is the graph's one conditional edge; every other step runs in a fixed order.</p>
+    <div class="panel">
+      <span class="punch l"></span><span class="punch r"></span>
+      <svg class="flow-svg" viewBox="0 0 955 190" role="img" aria-label="LangGraph claims processing flow">
+        <defs>
+          <marker id="fa" markerWidth="7" markerHeight="7" refX="5" refY="2.5" orient="auto"><path d="M0 0L6 2.5L0 5z" fill="#2B2419"/></marker>
+          <marker id="fd" markerWidth="7" markerHeight="7" refX="5" refY="2.5" orient="auto"><path d="M0 0L6 2.5L0 5z" fill="#A3342A"/></marker>
+        </defs>
+
+        <rect x="8" y="14" width="106" height="42" class="f-box" rx="1"/>
+        <text x="61" y="31" text-anchor="middle" class="f-lbl">parse_claim</text>
+        <text x="61" y="44" text-anchor="middle" class="f-lbl-sm">extract fields</text>
+
+        <path d="M114 35 H128" class="f-wire" marker-end="url(#fa)"/>
+        <rect x="130" y="14" width="106" height="42" class="f-box" rx="1"/>
+        <text x="183" y="31" text-anchor="middle" class="f-lbl">validate_claim</text>
+        <text x="183" y="44" text-anchor="middle" class="f-lbl-sm">is_valid_query</text>
+
+        <text x="243" y="9" text-anchor="middle" class="f-tag">valid</text>
+        <path d="M236 35 H250" class="f-wire" marker-end="url(#fa)"/>
+        <rect x="252" y="14" width="106" height="42" class="f-box" rx="1"/>
+        <text x="305" y="31" text-anchor="middle" class="f-lbl">generate_queries</text>
+        <text x="305" y="44" text-anchor="middle" class="f-lbl-sm">policy search terms</text>
+
+        <path d="M358 35 H372" class="f-wire" marker-end="url(#fa)"/>
+        <rect x="374" y="14" width="106" height="42" class="f-box" rx="1"/>
+        <text x="427" y="31" text-anchor="middle" class="f-lbl">retrieve_policy</text>
+        <text x="427" y="44" text-anchor="middle" class="f-lbl-sm">vector store lookup</text>
+
+        <path d="M480 35 H494" class="f-wire" marker-end="url(#fa)"/>
+        <rect x="496" y="14" width="106" height="42" class="f-box" rx="1"/>
+        <text x="549" y="31" text-anchor="middle" class="f-lbl">recommendation</text>
+        <text x="549" y="44" text-anchor="middle" class="f-lbl-sm">coverage view</text>
+
+        <path d="M602 35 H616" class="f-wire" marker-end="url(#fa)"/>
+        <rect x="618" y="14" width="106" height="42" class="f-box" rx="1"/>
+        <text x="671" y="31" text-anchor="middle" class="f-lbl">price_check</text>
+        <text x="671" y="44" text-anchor="middle" class="f-lbl-sm">&gt;$10,000 flag</text>
+
+        <path d="M724 35 H738" class="f-wire" marker-end="url(#fa)"/>
+        <rect x="740" y="14" width="136" height="42" class="f-box" rx="1"/>
+        <text x="808" y="31" text-anchor="middle" class="f-lbl">finalize_decision</text>
+        <text x="808" y="44" text-anchor="middle" class="f-lbl-sm">decision + payout</text>
+
+        <path d="M183 56 V84" class="f-wire-deny" marker-end="url(#fd)"/>
+        <text x="204" y="76" class="f-tag" fill="#A3342A">invalid</text>
+        <rect x="130" y="86" width="106" height="36" class="f-box deny" rx="1"/>
+        <text x="183" y="104" text-anchor="middle" class="f-lbl" fill="#A3342A">invalid_claim</text>
+        <text x="183" y="115" text-anchor="middle" class="f-lbl-sm">decision = INVALID</text>
+
+        <path d="M876 35 H900" class="f-wire" marker-end="url(#fa)"/>
+        <text x="906" y="39" class="f-lbl-sm" font-weight="700">END</text>
+        <path d="M183 122 V136 H900" class="f-wire-deny"/>
+        <path d="M894 130 L900 136 L894 142" class="f-wire-deny"/>
+        <text x="906" y="140" class="f-lbl-sm" font-weight="700">END</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FIG 6 — repo tree ============ -->
+<section class="tight">
+  <div class="wrap">
+    <div class="sec-head"><span class="idx">FIG. 6</span><h2>What's inside the repository</h2></div>
+    <p class="sec-sub">A standard LangGraph-plus-Streamlit layout: the graph and its tools live under <code>app/agent</code>, the vector store under <code>app/database</code>, and shipping instructions sit at the root next to the Dockerfile.</p>
+    <div class="panel">
+      <span class="punch l"></span><span class="punch r"></span>
+      <div class="tree">insurance-agent/
+├── <b>app/</b>
+│   ├── main.py            <span class="cm"># Streamlit UI: form entry, JSON upload, live log panel</span>
+│   ├── agent/
+│   │   ├── graph.py        <span class="cm"># StateGraph: 8 nodes + conditional edge</span>
+│   │   ├── tools.py        <span class="cm"># the 6 tools, as LangChain @tool functions</span>
+│   │   ├── prompts.py       <span class="cm"># one formatted prompt string per tool</span>
+│   │   └── state.py        <span class="cm"># shared state schema passed between nodes</span>
+│   ├── database/
+│   │   └── vector_store.py  <span class="cm"># load, chunk, embed, retrieve</span>
+│   └── utils/
+│       ├── config.py
+│       └── logger.py
+├── data/                     <span class="cm"># the policy document + coverage records</span>
+├── test_cases/                <span class="cm"># 5 sample claims + expected decisions</span>
+├── Dockerfile
+├── requirements.txt
+├── AWS_EC2_Deployment_Steps.md
+├── Docker_HUB_TO_Instance.md
+└── Readme.md</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FIG 7 — production test suite ============ -->
+<section class="tight">
+  <div class="wrap">
+    <div class="sec-head"><span class="idx">FIG. 7</span><h2>Five sample claims, shipped with the repo</h2></div>
+    <p class="sec-sub"><code>test_cases/</code> pairs five claims with an expected decision, so the graph can be checked without a live conversation — a low-risk claim, a high-amount boundary, a claim missing required data, a vendor-compliance denial, and a policy-limit edge case.</p>
+    <div class="suite">
+      <div class="suite-row head"><div>Claim ID</div><div>Policy holder</div><div>Amount</div><div>Expected</div><div>Test purpose</div></div>
+      <div class="suite-row"><div class="s-id">CLM-2026-AUTO-001</div><div class="s-name">Sarah Mitchell</div><div class="s-amt">$500</div><span class="stamp-mark approved" style="font-size:10px;padding:2px 7px">Approved</span><div class="s-why">Valid low-risk claim</div></div>
+      <div class="suite-row"><div class="s-id">CLM-2026-AUTO-002</div><div class="s-name">Michael Chen</div><div class="s-amt">$12,000</div><span class="stamp-mark review" style="font-size:10px;padding:2px 7px">Review</span><div class="s-why">High-amount boundary testing</div></div>
+      <div class="suite-row"><div class="s-id">CLM-2026-AUTO-003</div><div class="s-name">— (unnamed)</div><div class="s-amt">$0</div><span class="stamp-mark invalid" style="font-size:10px;padding:2px 7px">Invalid</span><div class="s-why">Missing required data validation</div></div>
+      <div class="suite-row"><div class="s-id">CLM-2026-AUTO-004</div><div class="s-name">Jennifer Rodriguez</div><div class="s-amt">$1,400</div><span class="stamp-mark denied" style="font-size:10px;padding:2px 7px">Denied</span><div class="s-why">Unauthorized vendor compliance</div></div>
+      <div class="suite-row"><div class="s-id">CLM-2026-AUTO-005</div><div class="s-name">David Thompson</div><div class="s-amt">$22,000</div><span class="stamp-mark review" style="font-size:10px;padding:2px 7px">Review</span><div class="s-why">Policy limit edge case</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FIG 8 — install paths ============ -->
+<section class="tight">
+  <div class="wrap">
+    <div class="sec-head"><span class="idx">FIG. 8</span><h2>Three ways to stand the service up</h2></div>
+    <p class="sec-sub">The Readme documents three install paths, from a from-scratch cloud build down to a local virtual environment.</p>
+    <div class="install-grid">
+      <div class="install-card">
+        <span class="i-num">PATH 1</span>
+        <h3>AWS EC2, from source</h3>
+        <ol>
+          <li>Launch an Ubuntu EC2 instance, install Docker</li>
+          <li>Clone the repo and add API keys to <code>.env</code></li>
+          <li>Build and run the image</li>
+        </ol>
+        <code>docker build -t insurance-agent:v1 .
+docker run -d -p 80:8501 insurance-agent:v1</code>
+      </div>
+      <div class="install-card">
+        <span class="i-num">PATH 2</span>
+        <h3>Docker Hub, pre-built</h3>
+        <ol>
+          <li>Install Docker on any instance</li>
+          <li>Pull the published image</li>
+          <li>Run it with keys passed as env vars</li>
+        </ol>
+        <code>docker pull gr8learning/insurance-agent:v1
+docker run -d -p 80:8501 \
+  -e OPENAI_API_KEY=... \
+  gr8learning/insurance-agent:v1</code>
+      </div>
+      <div class="install-card">
+        <span class="i-num">PATH 3</span>
+        <h3>Local virtual environment</h3>
+        <ol>
+          <li>Create and activate a venv</li>
+          <li><code>pip install -r requirements.txt</code></li>
+          <li>Add keys to <code>.env</code>, then launch</li>
+        </ol>
+        <code>streamlit run app/main.py
+# http://localhost:8501</code>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CLOSING IDEA ============ -->
+<section class="tight" style="padding:10px 0 4px">
+  <div class="wrap">
+    <div class="idea-panel">
+      <span class="tab brass" style="background:transparent;color:var(--brass-soft);border:1.5px solid var(--brass-soft)">Takeaways</span>
+      <p class="lede" style="margin-top:10px">The repository turns claims processing into a workflow, a retrieval layer, and an interface — each one packaged so it can be run, tested, and shipped on its own.</p>
+      <div class="idea-list">
+        <div><div class="n">01</div><p>An explicit state graph makes the decision auditable — eight named nodes you can log, test, and pin independently, with exactly one branch point.</p></div>
+        <div><div class="n">02</div><p>Validation is a policy decision, not just a prompt. Whoever owns that one tool owns the reason a claim gets denied.</p></div>
+        <div><div class="n">03</div><p>Shipping is part of the deliverable. The same graph ships three documented ways — EC2 build, Docker Hub pull, local venv.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap" style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;width:100%">
+    <span>AUTO INSURANCE CLAIMS AGENT</span>
+    <span>INSURANCE-AGENT REPOSITORY</span>
+  </div>
+</footer>
+
+</body>
+</html>
